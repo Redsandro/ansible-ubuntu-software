@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 #
 # For updating tlp settings, run:
-# sudo ./ansible.sh x1yoga.yml --tags tlp
+# sudo ./ansible.sh local.yml --tags tlp
 #
 # For remote provisioning, set up:
 # /etc/ansible/hosts
-# env ANSIBLE_NOCOWS=1 ansible-playbook --ask-become-pass --skip-tags="hidpi,yoga,oled" x1remote.yml
+# Skip tasks not relevant. E.g. for gpd pocket:
+# env ANSIBLE_NOCOWS=1 sudo ansible-playbook --skip-tags="lightdm,docker,virtualbox" remote-gpd.yml
 
 SU=""
 if [ "$(whoami)" != "root" ]; then

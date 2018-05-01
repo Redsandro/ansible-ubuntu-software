@@ -1,0 +1,10 @@
+# sudo apt-add-repository ppa:ansible/ansible && sudo apt update && sudo apt install ansible
+# sudo env ANSIBLE_NOCOWS=1 ansible-playbook --tags vagrant local.yml
+---
+- hosts: localhost
+  connection: local
+  become: true
+  roles:
+    - display
+    - common
+    - packages

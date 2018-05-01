@@ -34,13 +34,13 @@ sudo apt update && sudo apt install ansible
 #### Most probable use-case
 
 ```
-sudo env ANSIBLE_NOCOWS=1 ansible-playbook x1yoga.yml --skip-tags="packages,extras"
+sudo env ANSIBLE_NOCOWS=1 ansible-playbook local.yml --skip-tags="packages,extras"
 ```
 
 #### Everything except packages
 
 ```
-sudo env ANSIBLE_NOCOWS=1 ansible-playbook x1yoga.yml --skip-tags packages
+sudo env ANSIBLE_NOCOWS=1 ansible-playbook local.yml --skip-tags packages
 ```
 
 #### `tlp` Advanced Power Management only
@@ -48,19 +48,19 @@ sudo env ANSIBLE_NOCOWS=1 ansible-playbook x1yoga.yml --skip-tags packages
 Or simply for updating your configuration.
 
 ```
-sudo env ANSIBLE_NOCOWS=1 ansible-playbook x1yoga.yml --tags tlp
+sudo env ANSIBLE_NOCOWS=1 ansible-playbook local.yml --tags tlp
 ```
 
 #### GRUB background + 3 second timeout
 
 ```
-sudo env ANSIBLE_NOCOWS=1 ansible-playbook x1yoga.yml --tags grub
+sudo env ANSIBLE_NOCOWS=1 ansible-playbook local.yml --tags grub
 ```
 
 #### Enable touch in Firefox
 
 ```
-sudo env ANSIBLE_NOCOWS=1 ansible-playbook x1yoga.yml --tags firefox
+sudo env ANSIBLE_NOCOWS=1 ansible-playbook local.yml --tags firefox
 ```
 
 ### Tips

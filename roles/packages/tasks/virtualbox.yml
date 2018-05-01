@@ -1,4 +1,4 @@
-# sudo env ANSIBLE_NOCOWS=1 ansible-playbook --tags virtualbox x1yoga.yml
+# sudo env ANSIBLE_NOCOWS=1 ansible-playbook --tags virtualbox local.yml
 ---
 - name: VirtualBox | Add repository
   tags: [extras,packages,virtualbox]

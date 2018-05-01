@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Postman
+Comment=Postman Makes API Development Simple
+Exec=Postman
+Icon=Postman.svg
+Type=Application
+Terminal=false
+Categories=Utility;Development;
+StartupNotify=true

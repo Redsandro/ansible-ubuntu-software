@@ -1,4 +1,4 @@
-# env ANSIBLE_NOCOWS=1 ansible-playbook --ask-become-pass --tags tlp x1yoga.yml
+# env ANSIBLE_NOCOWS=1 ansible-playbook --ask-become-pass --tags tlp local.yml
 ---
 - name: TLP Power Management | Add Repository
   tags: [yoga,system,tlp]

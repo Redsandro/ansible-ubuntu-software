@@ -2,4 +2,4 @@
 - name: Master PDF Editor | Install .deb Package
   tags: [extras,packages,master-pfd-editor]
   apt:
-    deb: http://get.code-industry.net/public/master-pdf-editor-4.3.61_qt5.amd64.deb
+    deb: https://code-industry.net/public/master-pdf-editor-4.3.89_qt5.amd64.deb

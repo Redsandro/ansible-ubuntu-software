@@ -1,0 +1,54 @@
+# sudo env ANSIBLE_NOCOWS=1 ansible-playbook --tags postman local.yml
+---
+
+# Get main user for certain packages
+- name: Get Main User For Scripts
+  tags: [extras,packages,postman]
+  shell: id -nu 1000
+  register: get_user_by_id
+- name: Register Main User
+  tags: [extras,packages,postman]
+  set_fact:
+    user: "{{get_user_by_id.stdout}}"
+- debug:
+    var: user
+
+- name: Postman | mkdir
+  tags: [extras,packages,postman]
+  file:
+    path: '/home/{{user}}/opt/Postman'
+    state: directory
+- name: Postman | Download package
+  tags: [extras,packages,postman]
+  unarchive:
+    src: https://dl.pstmn.io/download/latest/linux64
+    dest: '/home/{{user}}/opt/Postman'
+    remote_src: yes
+    extra_opts: [--strip-components=1]
+    owner: '{{user}}'
+    group: '{{user}}'
+- name: Postman | Download Logo
+  tags: [extras,packages,postman]
+  get_url:
+    url: https://www.getpostman.com/img/v2/products/equation-postman.svg
+    dest: '/home/{{user}}/opt/Postman/Postman.svg'
+    mode: 0644
+    owner: '{{user}}'
+    group: '{{user}}'
+- name: Postman | Create launcher
+  tags: [extras,packages,postman]
+  template:
+    src: files/Postman.desktop
+    dest: '/home/{{user}}/.local/share/applications/Postman.desktop'
+    mode: 0644
+    owner: '{{user}}'
+    group: '{{user}}'
+- name: Update launcher
+  tags: [extras,packages,postman]
+  lineinfile:
+    path: '/home/{{user}}/.local/share/applications/Postman.desktop'
+    regexp: '^{{item.key}}='
+    line: '{{item.key}}={{item.value}}'
+  with_items:
+    - { key: 'Exec', value: '/home/{{user}}/opt/Postman/Postman' }
+    - { key: 'Icon', value: '/home/{{user}}/opt/Postman/Postman.svg' }

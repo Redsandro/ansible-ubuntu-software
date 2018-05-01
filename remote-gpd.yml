@@ -1,0 +1,11 @@
+# /etc/ansible/hosts
+# Skip tasks not relevant. E.g. for gpd pocket:
+# env ANSIBLE_NOCOWS=1 ansible-playbook --skip-tags="lightdm,docker,virtualbox" remote-gpd.yml
+---
+- hosts: gpd
+  gather_facts: false
+  become: true
+  roles:
+    - display
+    - common
+    - packages

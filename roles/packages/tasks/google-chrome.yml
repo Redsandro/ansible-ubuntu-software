@@ -3,7 +3,7 @@
   tags: [extras,packages,google-chrome]
   apt_repository:
     repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
-    filename: google-chrome-unstable
+    filename: google-chrome
 - name: Google Chrome | Add Repository Key
   tags: [extras,packages,google-chrome]
   apt_key:

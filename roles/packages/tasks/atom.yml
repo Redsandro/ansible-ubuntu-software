@@ -2,8 +2,14 @@
 - name: Atom | Add repository
   tags: [extras,packages,atom]
   apt_repository:
-    repo: ppa:webupd8team/atom
-    codename: xenial
+    repo: deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main
+    state: present
+    filename: atom
+- name: Atom | Add Atom Repository Key
+  tags: [extras,packages,atom]
+  apt_key:
+    url: https://packagecloud.io/AtomEditor/atom/gpgkey
+    state: present
 - name: Atom | Install package
   tags: [extras,packages,atom]
   package:

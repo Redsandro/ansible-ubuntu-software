@@ -1,10 +1,10 @@
 ---
 - name: Packages | Update Cache
-  tags: [extras,packages,packages]
+  tags: [extras,packages]
   apt:
     update_cache: yes
 - name: Packages | Install Official Packages
-  tags: [extras,packages,packages]
+  tags: [extras,packages]
   package:
     name: "{{ item }}"
     state: latest
@@ -45,11 +45,13 @@
     - mpv
     - ocrfeeder
     - openssh-client
+    - pdfchain
     - pixz
     - pv
     - pyrenamer
     - python-easywebdav
     - python-termcolor
+    - python-keyring
     - rkhunter
     - screen
     - smartmontools
@@ -63,10 +65,20 @@
     # - virtualbox-ext-pack
     - xclip
     - youtube-dl
+- name: Packages | Get Main User
+  tags: [extras,packages]
+  shell: id -nu 1000
+  register: get_user_by_id
+- name: Packages | Register Main User
+  tags: [extras,packages]
+  set_fact:
+    main_user: "{{get_user_by_id.stdout}}"
+- debug:
+    var: main_user
 - name: Packages | Add User To Groups
   tags: [extras,packages,webdav]
   user:
-    name: sander
+    name: "{{main_user}}"
     groups: davfs2
     append: yes
 - name: Packages | Setuid root

@@ -1,4 +1,4 @@
-# env ANSIBLE_NOCOWS=1 ansible-playbook --ask-become-pass --tags freefilesync x1yoga.yml
+# sudo env ANSIBLE_NOCOWS=1 ansible-playbook --tags freefilesync local.yml
 ---
 - name: FreeFileSync | mkdir
   tags: [extras,packages,freefilesync]
@@ -41,3 +41,26 @@
   with_items:
     - GlobalSettings.xml
     - LastRun.ffs_gui
+- name: FreeFileSync | Update config - Remove external apps
+  tags: [extras,packages,freefilesync,test121]
+  xml:
+    path: /opt/FreeFileSync/GlobalSettings.xml
+    xpath: /FreeFileSync/Gui/ExternalApps/*
+    state: absent
+- name: FreeFileSync | Update config
+  tags: [extras,packages,freefilesync,test121]
+  xml:
+    path: /opt/FreeFileSync/GlobalSettings.xml
+    xpath: /FreeFileSync/Gui/ExternalApps
+    add_children:
+      - Item:
+          _:
+            - one: "{{item.one}}"
+            - two: "{{item.two}}"
+  with_items:
+    - one: Browse directory
+      two: xdg-open "%folder_path%"
+    - one: Open with default application
+      two: xdg-open "%local_path%"
+    - one: Compare with meld
+      two: meld "%local_path%" "%local_path2%"

@@ -11,12 +11,10 @@
     insertafter: '^Unattended-Upgrade::Allowed-Origins'
     backup: yes
   with_items:
-    - '    "mongodb:xenial"; // MongoDB official'
     - '    "Canonical:xenial"; // Partner packages such as Flash'
     - '    "Google\, Inc.:stable"; // Google Chrome'
     - '    "GetDeb:xenial-getdeb";'
     - '    "LP-PPA-pmjdebruijn-darktable-release:xenial"; // Darktable'
-    - '    "LP-PPA-webupd8team-atom:xenial"; // Atom'
     - '    "LP-PPA-alessandro-strada:xenial"; // google-drive-ocamlfuse'
     - '    "linuxmint:sylvia-updates";'
     - '    "linuxmint:sylvia-security";'

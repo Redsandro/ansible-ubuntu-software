@@ -1,0 +1,18 @@
+# env ANSIBLE_NOCOWS=1 ansible-playbook --ask-become-pass --tags ssh-server local.yml
+---
+- name: OpenSSH | Install Package
+  tags: [packages,ssh,ssh-server]
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - openssh-server
+- name: OpenSSH | Tweak Configuration
+  tags: [packages,ssh,ssh-server]
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#?{{ item.key }} "
+    line: "{{ item.key }} {{ item.value }}"
+  with_items:
+    - { key: 'PasswordAuthentication', value: 'no' }
+    - { key: 'PermitRootLogin', value: 'prohibit-password' }

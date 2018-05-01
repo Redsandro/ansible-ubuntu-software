@@ -1,4 +1,4 @@
-# env ANSIBLE_NOCOWS=1 ansible-playbook --ask-become-pass --tags vidcutter x1yoga.yml
+# env ANSIBLE_NOCOWS=1 ansible-playbook --ask-become-pass --tags vidcutter local.yml
 ---
 - name: VidCutter | Add repository
   tags: [extras,packages,vidcutter]

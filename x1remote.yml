@@ -1,7 +1,0 @@
----
-- hosts: x1remote
-  become: true
-  roles:
-    - display
-    - common
-    - packages
