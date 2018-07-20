@@ -11,17 +11,17 @@
 - name: WineHQ | Enable i386 architecture
   tags: [extras,packages,wine]
   command: dpkg --add-architecture i386
+- name: WineHQ | Add Key
+  tags: [extras,packages,wine]
+  apt_key:
+    url: https://dl.winehq.org/wine-builds/Release.key
+    state: present
 - name: WineHQ | Add Repository
   tags: [extras,packages,wine]
   apt_repository:
     repo: deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main
     state: present
     filename: wine-builds
-- name: WineHQ | Add Key
-  tags: [extras,packages,wine]
-  apt_key:
-    url: https://dl.winehq.org/wine-builds/Release.key
-    state: present
 - name: WineHQ | Install Package
   tags: [extras,packages,wine]
   package:

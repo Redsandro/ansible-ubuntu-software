@@ -1,5 +1,10 @@
 # sudo env ANSIBLE_NOCOWS=1 ansible-playbook --tags virtualbox local.yml
 ---
+- name: VirtualBox | Add repository key
+  tags: [extras,packages,virtualbox]
+  apt_key:
+    url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+    state: present
 - name: VirtualBox | Add repository
   tags: [extras,packages,virtualbox]
   apt_repository:

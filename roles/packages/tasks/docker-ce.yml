@@ -11,17 +11,17 @@
 - debug:
     var: user
 
-- name: Docker-CE | Add Repository
-  tags: [extras,packages,docker]
-  apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
-    filename: docker
 - name: Docker-CE | Add Repository Key
   tags: [extras,packages,docker]
   apt_key: keyserver=keyserver.ubuntu.com id=7EA0A9C3F273FCD8 state=present
 #  apt_key:
 #    url: https://download.docker.com/linux/ubuntu/gpg
 #    state: present
+- name: Docker-CE | Add Repository
+  tags: [extras,packages,docker]
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
+    filename: docker
 - name: Docker-CE | Install package
   tags: [extras,packages,docker]
   package:

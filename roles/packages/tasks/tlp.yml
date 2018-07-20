@@ -1,18 +1,18 @@
 # env ANSIBLE_NOCOWS=1 ansible-playbook --ask-become-pass --tags tlp local.yml
 ---
 - name: TLP Power Management | Add Repository
-  tags: [yoga,system,tlp]
+  tags: [yoga,system,tlp,never]
   apt_repository:
     repo: ppa:linrunner/tlp
     codename: bionic
 - name: TLP Power Management | Add Proposed Repository For acpi-call Hotfixes
-  tags: [yoga,system,tlp]
+  tags: [yoga,system,tlp,never]
   apt_repository:
     repo: 'deb http://archive.ubuntu.com/ubuntu/ bionic-proposed restricted main multiverse universe'
     filename: official-package-repositories
     state: present
 - name: TLP Power Management | Install Packages
-  tags: [yoga,system,tlp]
+  tags: [yoga,system,tlp,never]
   package:
     name: "{{ item }}"
     state: latest
@@ -22,14 +22,14 @@
     - tlp
     - tlp-rdw
 - name: TLP Power Management | Remove Proposed Repository
-  tags: [yoga,system,tlp]
+  tags: [yoga,system,tlp,never]
   apt_repository:
     repo: 'deb http://archive.ubuntu.com/ubuntu/ bionic-proposed restricted main multiverse universe'
     filename: official-package-repositories
     state: absent
     update_cache: yes
 - name: TLP Power Management | Tweak Configuration
-  tags: [yoga,system,tlp]
+  tags: [yoga,system,tlp,never]
   lineinfile:
     path: /etc/default/tlp
     regexp: "^#?{{ item.key }}="

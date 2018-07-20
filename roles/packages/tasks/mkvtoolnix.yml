@@ -10,6 +10,15 @@
   apt_repository:
     repo: deb https://mkvtoolnix.download/ubuntu/ bionic main
     filename: mkvtoolnix
+- name: mkvtoolnix | Remove old versions
+  tags: [extras,packages,mkvtoolnix]
+  package:
+    name: "{{ item }}"
+    state: absent
+    update_cache: no
+  with_items:
+    - mkvtoolnix
+    - mkvtoolnix-gui
 - name: mkvtoolnix | Install gui and cli package
   tags: [extras,packages,mkvtoolnix]
   package:

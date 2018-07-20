@@ -1,10 +1,10 @@
 ---
 - name: Packages | Update Cache
-  tags: [extras,packages]
+  tags: [extras,packages,official]
   apt:
     update_cache: yes
 - name: Packages | Install Official Packages
-  tags: [extras,packages]
+  tags: [extras,packages,official]
   package:
     name: "{{ item }}"
     state: latest
@@ -61,7 +61,7 @@
     - xclip
     - youtube-dl
 - name: Packages | Remove Unwanted Packages
-  tags: [extras,packages,packages]
+  tags: [extras,packages,packages,official]
   package:
     name: "{{ item }}"
     state: absent
