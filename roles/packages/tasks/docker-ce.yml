@@ -28,6 +28,16 @@
     name: docker.io
     state: latest
     update_cache: yes
+- name: Docker-CE | Get docker-compose
+  tags: [extras,packages,docker]
+  # TODO: Get latest non-RC release from # https://github.com/docker/compose/releases/
+  get_url:
+    url: https://github.com/docker/compose/releases/download/1.22.0/docker-compose-Linux-x86_64
+    #dest: /usr/local/bin/docker-compose
+    dest: '/home/{{user}}/bin/docker-compose'
+    mode: 0755
+    owner: '{{user}}'
+    group: '{{user}}'
 - name: Docker-CE | Add User To Group
   tags: [extras,packages,docker]
   user:
