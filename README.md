@@ -1,5 +1,12 @@
 # Ubuntu Preferred Packages Playbook
 
+> :warning: __Note:__
+>
+> This will install packages from `bionic` repositories.
+> E.g.: Linux Mint 19, Ubuntu 18.04.
+>
+> For `xenial`, check out the `xenial` branch.
+
 > :information_source: __Note:__ The _Thinkpad X1 Yoga Provisioning Playbook_ has moved [here](https://github.com/Redsandro/thinkpad-x1-yoga).
 
 Download the repo:

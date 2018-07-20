@@ -1,6 +1,9 @@
-# TODO: find latest
 ---
+- name: Vagrant | Find latest version
+  tags: [never,extras,packages,vagrant]
+  shell: wget -O - https://www.vagrantup.com/downloads.html | grep x86_64.deb | head -n1 | sed -n 's/.*<a href="\([^"]*\)".*/\1/p'
+  register: deb_url
 - name: Vagrant | Install package
   tags: [never,extras,packages,vagrant]
   apt:
-    deb: https://releases.hashicorp.com/vagrant/2.0.1/vagrant_2.0.1_x86_64.deb
+    deb: '{{deb_url.stdout}}'

@@ -1,7 +1,7 @@
 ---
 # Note: This one is only relevant with multiple boot options
 - name: Grub | Add Background Image
-  tags: [extras,grub]
+  tags: [extras,grub,never]
   copy:
     src: files/splash.png
     dest: /boot/grub/splash.png
@@ -10,7 +10,7 @@
     mode: 0644
   become: true
 - name: Grub | Hide grub menu and lower timeout
-  tags: [extras,grub]
+  tags: [extras,grub,never]
   lineinfile:
     path: /etc/default/grub
     regexp: "^{{ item.key }}="
@@ -21,6 +21,6 @@
     - { key: 'GRUB_TIMEOUT', value: '2' }
     - { key: 'GRUB_TIMEOUT_STYLE', value: 'countdown' }
 - name: Grub | Update
-  tags: [extras,grub]
+  tags: [extras,grub,never]
   command: update-grub
   become: true

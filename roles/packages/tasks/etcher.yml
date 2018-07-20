@@ -7,9 +7,10 @@
     filename: etcher
 - name: Etcher | Add Repository Key
   tags: [extras,packages,etcher]
-  apt_key:
-    keyserver: hkp://pgp.mit.edu
-    id: 379CE192D401AB61
+  apt_key: keyserver=keyserver.ubuntu.com id=379CE192D401AB61 state=present
+#  apt_key:
+#    keyserver: hkp://pgp.mit.edu
+#    id: 379CE192D401AB61
 - name: Etcher | Install package
   tags: [extras,packages,etcher]
   package:

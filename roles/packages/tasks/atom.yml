@@ -7,9 +7,10 @@
     filename: atom
 - name: Atom | Add Atom Repository Key
   tags: [extras,packages,atom]
-  apt_key:
-    url: https://packagecloud.io/AtomEditor/atom/gpgkey
-    state: present
+  apt_key: keyserver=keyserver.ubuntu.com id=4C6E74D6C0A35108 state=present
+#  apt_key:
+#    url: https://packagecloud.io/AtomEditor/atom/gpgkey
+#    state: present
 - name: Atom | Install package
   tags: [extras,packages,atom]
   package:

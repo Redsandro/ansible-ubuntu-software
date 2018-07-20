@@ -18,7 +18,6 @@
     - clamtk
     - composer
     - conky-all
-    - davfs2
     - exfat-fuse
     - exfat-utils
     - feh
@@ -27,7 +26,7 @@
     - fslint
     - geany
     - geany-plugins
-    - geany-plugin-markdown
+#    - geany-plugin-markdown # not in Mint 19
     - gimp
     - git
     - gitk
@@ -40,53 +39,27 @@
     - lmms
     - mediainfo-gui
     - meld
-    - mkvtoolnix-gui
     - mplayer
     - mpv
     - ocrfeeder
     - openssh-client
-    - pdfchain
+#    - pdfchain # not in Mint 19
     - pixz
     - pv
-    - pyrenamer
-    - python-easywebdav
+#    - pyrenamer # not in Mint 19
     - python-termcolor
     - python-keyring
+    - python-vsgui
     - rkhunter
     - screen
     - smartmontools
     - software-properties-common
     - sshfs
+    - terminator
     - tomboy
-    - unetbootin
     - unrar
-    # - virtualbox
-    # - virtualbox-qt
-    # - virtualbox-ext-pack
     - xclip
     - youtube-dl
-- name: Packages | Get Main User
-  tags: [extras,packages]
-  shell: id -nu 1000
-  register: get_user_by_id
-- name: Packages | Register Main User
-  tags: [extras,packages]
-  set_fact:
-    main_user: "{{get_user_by_id.stdout}}"
-- debug:
-    var: main_user
-- name: Packages | Add User To Groups
-  tags: [extras,packages,webdav]
-  user:
-    name: "{{main_user}}"
-    groups: davfs2
-    append: yes
-- name: Packages | Setuid root
-  tags: [extras,packages,webdav]
-  file:
-    path: /usr/sbin/mount.davfs
-    state: touch
-    mode: 4755
 - name: Packages | Remove Unwanted Packages
   tags: [extras,packages,packages]
   package:

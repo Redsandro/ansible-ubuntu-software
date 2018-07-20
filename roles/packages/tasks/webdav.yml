@@ -1,0 +1,43 @@
+---
+- name: WebDAV FS | Install Package
+  tags: [extras,packages,webdav]
+  package:
+    name: '{{item}}'
+    state: latest
+  with_items:
+    - davfs2
+    - python-easywebdav
+- name: WebDAV FS | Get Main User
+  tags: [extras,packages,webdav]
+  shell: id -nu 1000
+  register: get_user_by_id
+- name: WebDAV FS | Register Main User
+  tags: [extras,packages,webdav]
+  set_fact:
+    user: "{{get_user_by_id.stdout}}"
+- debug:
+    var: user
+- name: WebDAV FS | Add User To Groups
+  tags: [extras,packages,webdav]
+  user:
+    name: "{{user}}"
+    groups: davfs2
+    append: yes
+- name: WebDAV FS | Setuid root
+  tags: [extras,packages,webdav]
+  file:
+    path: /usr/sbin/mount.davfs
+    state: touch
+    mode: 4755
+- name: WebDAV FS | Remove Unwanted WebDAV FS
+  tags: [extras,packages,packages,webdav]
+  package:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - hexchat
+
+# TODO:
+# gscan2pdf from https://sourceforge.net/projects/gscan2pdf/
+# ttf-*
+# fonts-*

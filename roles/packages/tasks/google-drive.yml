@@ -3,7 +3,7 @@
   tags: [extras,packages,google-drive]
   apt_repository:
     repo: ppa:alessandro-strada/ppa
-    codename: xenial
+    codename: bionic
 - name: Google Drive | Install package
   tags: [extras,packages,google-drive]
   package:

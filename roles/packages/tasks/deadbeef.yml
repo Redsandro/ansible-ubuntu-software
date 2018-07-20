@@ -1,17 +1,19 @@
 ---
-- name: DeadBeef | Add GetDeb Repository
+- name: DeadBeef | Add 3rd party PPA
   tags: [extras,packages,deadbeef]
   apt_repository:
-    repo: deb http://archive.getdeb.net/ubuntu xenial-getdeb apps
-    filename: getdeb
-- name: DeadBeef | Add GetDeb Repository Key
-  tags: [extras,packages,deadbeef]
-  apt_key:
-    url: http://archive.getdeb.net/getdeb-archive.key
-    state: present
+    repo: ppa:starws-box/deadbeef-player
+    codename: bionic
 - name: DeadBeef | Install package
   tags: [extras,packages,deadbeef]
   package:
     name: deadbeef
     state: latest
+    update_cache: yes
+- name: DeadBeef | Remove 3rd party PPA
+  tags: [extras,packages,deadbeef]
+  apt_repository:
+    repo: ppa:starws-box/deadbeef-player
+    codename: bionic
+    state: absent
     update_cache: yes

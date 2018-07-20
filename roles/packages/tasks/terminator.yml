@@ -4,7 +4,7 @@
   tags: [extras,packages,terminator]
   apt_repository:
     repo: ppa:gnome-terminator
-    codename: xenial
+    codename: bionic
 - name: Terminator | Install package
   tags: [extras,packages,terminator]
   package:

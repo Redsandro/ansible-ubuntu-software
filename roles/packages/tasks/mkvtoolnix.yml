@@ -1,23 +1,23 @@
 # env ANSIBLE_NOCOWS=1 ansible-playbook --ask-become-pass --tags mkvtoolnix local.yml
 ---
-- name: mkvtoolnix | Add Repository
-  tags: [extras,packages,mkvtoolnix]
-  apt_repository:
-    repo: deb https://mkvtoolnix.download/ubuntu/xenial/ ./
-    filename: mkvtoolnix
 - name: mkvtoolnix | Add Repository Key
   tags: [extras,packages,mkvtoolnix]
   apt_key:
     url: https://mkvtoolnix.download/gpg-pub-moritzbunkus.txt
     state: present
-- name: mkvtoolnix | Install gui
+- name: mkvtoolnix | Add Repository
+  tags: [extras,packages,mkvtoolnix]
+  apt_repository:
+    repo: deb https://mkvtoolnix.download/ubuntu/ bionic main
+    filename: mkvtoolnix
+- name: mkvtoolnix | Install gui and cli package
   tags: [extras,packages,mkvtoolnix]
   package:
-    name: mkvtoolnix-gui
-    state: latest
-- name: mkvtoolnix | Install package
-  tags: [extras,packages,mkvtoolnix]
-  package:
-    name: mkvtoolnix
+    name: '{{package}}'
     state: latest
     update_cache: yes
+  with_items:
+    - mkvtoolnix-gui
+    # - mkvtoolnix
+  loop_control:
+    loop_var: package

@@ -1,56 +1,78 @@
 # sudo env ANSIBLE_NOCOWS=1 ansible-playbook --tags freefilesync local.yml
 ---
+# Get main user for certain packages
+- name: Get Main User For Scripts
+  tags: [extras,packages,freefilesync]
+  shell: id -nu 1000
+  register: get_user_by_id
+- name: Register Main User
+  tags: [extras,packages,freefilesync]
+  set_fact:
+    user: "{{get_user_by_id.stdout}}"
+- debug:
+    var: user
+
 - name: FreeFileSync | mkdir
   tags: [extras,packages,freefilesync]
-  file: path=/opt/FreeFileSync state=directory
-- name: FreeFileSync | Grab 16.04 download link
+  file:
+    path: '/home/{{user}}/opt/FreeFileSync'
+    state: directory
+- name: FreeFileSync | Grab 18.04 download link
   tags: [extras,packages,freefilesync]
-  shell: wget -O - https://www.freefilesync.org/download.php | grep 'Ubuntu_16.04_64-bit.tar.gz' | sed -n 's/.*href="\(.*\)".*/\1/p'
+  shell: wget -O - https://www.freefilesync.org/download.php | grep 'FreeFileSync_10.2_Linux_64-bit.tar.gz' | sed -n 's/.*href="\(.*\)".*/\1/p'
   register: freefilesync_url
 - name: FreeFileSync | Download package
   tags: [extras,packages,freefilesync]
   unarchive:
     src: 'https://www.freefilesync.org{{freefilesync_url.stdout}}'
-    dest: /opt/FreeFileSync
+    dest: '/home/{{user}}/opt/FreeFileSync'
     remote_src: yes
     extra_opts: [--strip-components=1]
+    owner: '{{user}}'
+    group: '{{user}}'
 - name: FreeFileSync | Download Logo
   tags: [extras,packages,freefilesync]
   get_url:
     url: https://www.freefilesync.org/images/FreeFileSync.png
-    dest: /opt/FreeFileSync/FreeFileSync.png
+    dest: '/home/{{user}}/opt/FreeFileSync/FreeFileSync.png'
     mode: 0644
+    owner: '{{user}}'
+    group: '{{user}}'
 - name: FreeFileSync | Create Launcher
   tags: [extras,packages,freefilesync]
   template:
     src: files/FreeFileSync.desktop
-    dest: /usr/share/applications/FreeFileSync.desktop
+    dest: '/home/{{user}}/.local/share/applications/FreeFileSync.desktop'
     mode: 0644
+    owner: '{{user}}'
+    group: '{{user}}'
+- name: FreeFileSync | Update Launcher
+  tags: [extras,packages,freefilesync]
+  lineinfile:
+    path: '/home/{{user}}/.local/share/applications/FreeFileSync.desktop'
+    regexp: '^{{item.key}}='
+    line: '{{item.key}}={{item.value}}'
+  with_items:
+    - { key: 'Exec', value: '/home/{{user}}/opt/FreeFileSync/FreeFileSync' }
+    - { key: 'Icon', value: '/home/{{user}}/opt/FreeFileSync/FreeFileSync.png' }
 - name: FreeFileSync | Symlink
   tags: [extras,packages,freefilesync]
   file:
-    src: /opt/FreeFileSync/FreeFileSync
-    dest: /usr/local/bin/FreeFileSync
+    src: '/home/{{user}}/opt/FreeFileSync/FreeFileSync'
+    dest: '/home/{{user}}/bin/FreeFileSync'
     state: link
-- name: FreeFileSync | Configuration permissions
-  tags: [extras,packages,freefilesync]
-  file:
-    path: /opt/FreeFileSync/{{item}}
-    state: touch
-    mode: 0666
-  with_items:
-    - GlobalSettings.xml
-    - LastRun.ffs_gui
+    owner: '{{user}}'
+    group: '{{user}}'
 - name: FreeFileSync | Update config - Remove external apps
   tags: [extras,packages,freefilesync,test121]
   xml:
-    path: /opt/FreeFileSync/GlobalSettings.xml
+    path: '/home/{{user}}/opt/FreeFileSync/GlobalSettings.xml'
     xpath: /FreeFileSync/Gui/ExternalApps/*
     state: absent
 - name: FreeFileSync | Update config
   tags: [extras,packages,freefilesync,test121]
   xml:
-    path: /opt/FreeFileSync/GlobalSettings.xml
+    path: '/home/{{user}}/opt/FreeFileSync/GlobalSettings.xml'
     xpath: /FreeFileSync/Gui/ExternalApps
     add_children:
       - Item:

@@ -1,30 +1,30 @@
 ---
 - name: Unattended Upgrades | Install Package
-  tags: [extras,upgrades]
+  tags: [extras,upgrades,never]
   package:
     name: unattended-upgrades
 - name: Unattended Upgrades | Add Allowed Origins
-  tags: [extras,upgrades]
+  tags: [extras,upgrades,never]
   lineinfile:
     path: /etc/apt/apt.conf.d/50unattended-upgrades
     line: "{{ item }}"
     insertafter: '^Unattended-Upgrade::Allowed-Origins'
     backup: yes
   with_items:
-    - '    "Canonical:xenial"; // Partner packages such as Flash'
+    - '    "Canonical:bionic"; // Partner packages such as Flash'
     - '    "Google\, Inc.:stable"; // Google Chrome'
-    - '    "GetDeb:xenial-getdeb";'
-    - '    "LP-PPA-pmjdebruijn-darktable-release:xenial"; // Darktable'
-    - '    "LP-PPA-alessandro-strada:xenial"; // google-drive-ocamlfuse'
-    - '    "linuxmint:sylvia-updates";'
-    - '    "linuxmint:sylvia-security";'
-    - '    "linuxmint:sylvia";'
-    - '    "Ubuntu:xenial-updates";'
-    - '    "Ubuntu:xenial-security";'
-    - '    "Ubuntu:xenial";'
+    - '    "GetDeb:bionic-getdeb";'
+    - '    "LP-PPA-pmjdebruijn-darktable-release:bionic"; // Darktable'
+    - '    "LP-PPA-alessandro-strada:bionic"; // google-drive-ocamlfuse'
+    - '    "linuxmint:tara-updates";'
+    - '    "linuxmint:tara-security";'
+    - '    "linuxmint:tara";'
+    - '    "Ubuntu:bionic-updates";'
+    - '    "Ubuntu:bionic-security";'
+    - '    "Ubuntu:bionic";'
     - '    "${distro_id}:${distro_codename}-updates";'
 - name: Unattended Upgrades | Add Level 4 and 5 Packages To Blacklist
-  tags: [extras,upgrades]
+  tags: [extras,upgrades,never]
   lineinfile:
     path: /etc/apt/apt.conf.d/50unattended-upgrades
     line: "{{ item }}"
@@ -45,7 +45,7 @@
     - '    "grub.*";'
     - '    // updates of levels 4 and 5 will be omitted'
 - name: Change updater settings
-  tags: [extras,upgrades]
+  tags: [extras,upgrades,never]
   lineinfile:
     path: /etc/apt/apt.conf.d/50unattended-upgrades
     regexp: '^(//)?{{ item.key }}'
@@ -57,7 +57,7 @@
     - { key: 'Unattended-Upgrade::Remove-Unused-Dependencies', value: 'true' }
     - { key: 'Unattended-Upgrade::Automatic-Reboot', value: 'false' }
 - name: Adding comments
-  tags: [extras,upgrades]
+  tags: [extras,upgrades,never]
   blockinfile:
     path: /etc/apt/apt.conf.d/50unattended-upgrades
     marker: // {mark} Notes
@@ -68,7 +68,7 @@
       // Verify:   sudo unattended-upgrade --dry-run && cat /var/log/unattended-upgrades/unattended-upgrades.log
     insertbefore: BOF
 - name: Unattended Upgrades | Enable Unattended Upgrades
-  tags: [extras,upgrades]
+  tags: [extras,upgrades,never]
   lineinfile:
     path: /etc/apt/apt.conf.d/20auto-upgrades
     regexp: '^(//)?{{ item.key }}'

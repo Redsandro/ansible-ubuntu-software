@@ -6,9 +6,10 @@
     filename: google-chrome
 - name: Google Chrome | Add Repository Key
   tags: [extras,packages,google-chrome]
-  apt_key:
-    url: https://dl-ssl.google.com/linux/linux_signing_key.pub
-    state: present
+  apt_key: keyserver=keyserver.ubuntu.com id=1397BC53640DB551 state=present
+#  apt_key:
+#    url: https://dl-ssl.google.com/linux/linux_signing_key.pub
+#    state: present
 - name: Google Chrome | Install package
   tags: [extras,packages,google-chrome]
   package:

@@ -1,14 +1,27 @@
 ---
+# Get main user
+- name: Get Main User For Scripts
+  tags: [extras,packages,docker]
+  shell: id -nu 1000
+  register: get_user_by_id
+- name: Register Main User
+  tags: [extras,packages,docker]
+  set_fact:
+    user: "{{get_user_by_id.stdout}}"
+- debug:
+    var: user
+
 - name: Docker-CE | Add Repository
   tags: [extras,packages,docker]
   apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
     filename: docker
 - name: Docker-CE | Add Repository Key
   tags: [extras,packages,docker]
-  apt_key:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    state: present
+  apt_key: keyserver=keyserver.ubuntu.com id=7EA0A9C3F273FCD8 state=present
+#  apt_key:
+#    url: https://download.docker.com/linux/ubuntu/gpg
+#    state: present
 - name: Docker-CE | Install package
   tags: [extras,packages,docker]
   package:
@@ -18,6 +31,6 @@
 - name: Docker-CE | Add User To Group
   tags: [extras,packages,docker]
   user:
-    name: sander
+    name: '{{user}}'
     groups: docker
     append: yes
