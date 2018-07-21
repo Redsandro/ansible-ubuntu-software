@@ -1,0 +1,21 @@
+# sudo env ANSIBLE_NOCOWS=1 ansible-playbook --tags etcher local.yml
+---
+- name: Albert | Add Repository Key
+  tags: [extras,packages,albert]
+  when: ansible_distribution_release == 'tara' or ansible_distribution_release == 'bionic'
+  apt_key:
+    url: https://download.opensuse.org/repositories/home:manuelschneid3r/xUbuntu_18.04/Release.key
+    state: present
+- name: Albert | Add Repository
+  tags: [extras,packages,albert]
+  when: ansible_distribution_release == 'tara' or ansible_distribution_release == 'bionic'
+  apt_repository:
+    repo: deb http://download.opensuse.org/repositories/home:/manuelschneid3r/xUbuntu_18.04/ /
+    filename: albert
+- name: Albert | Install package
+  tags: [extras,packages,albert]
+  when: ansible_distribution_release == 'tara' or ansible_distribution_release == 'bionic'
+  package:
+    name: albert
+    state: latest
+    update_cache: yes
