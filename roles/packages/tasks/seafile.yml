@@ -1,0 +1,15 @@
+# sudo env ANSIBLE_NOCOWS=1 ansible-playbook --tags seafile local.yml
+---
+- name: Seafile | Add 3rd party PPA
+  tags: [extras,packages,seafile]
+  apt_repository:
+    repo: ppa:seafile/seafile-client
+    codename: bionic
+- name: Seafile | Install package
+  tags: [extras,packages,seafile]
+  package:
+    name: '{{item}}'
+    state: latest
+  with_items:
+    - seafile-gui
+    - seafile-cmd
