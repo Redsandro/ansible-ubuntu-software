@@ -1,0 +1,13 @@
+---
+- name: Metamorphose 2 | Add repository
+  tags: [packages,metamorphose,never]
+  apt_repository:
+    repo: ppa:nilarimogard/webupd8
+    codename: bionic
+    state: present
+- name: Metamorphose 2 | Install package
+  tags: [packages,metamorphose,never]
+  package:
+    name: metamorphose2
+    state: latest
+    update_cache: yes

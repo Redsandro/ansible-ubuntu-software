@@ -21,6 +21,7 @@
 - import_tasks: google-chrome.yml
 - import_tasks: google-drive.yml
 - import_tasks: master-pdf-editor.yml
+- import_tasks: metamorphose2.yml
 - import_tasks: mkvtoolnix.yml
 - import_tasks: nextcloud.yml
 - import_tasks: postman.yml
