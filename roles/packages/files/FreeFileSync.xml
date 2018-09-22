@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FreeFileSync XmlType="GLOBAL" XmlFormat="10">
+    <General>
+        <Language Name="English (U.S.)"/>
+        <FailSafeFileCopy Enabled="true"/>
+        <CopyLockedFiles Enabled="false"/>
+        <CopyFilePermissions Enabled="false"/>
+        <FileTimeTolerance Seconds="2"/>
+        <FolderAccessTimeout Seconds="20"/>
+        <RunWithBackgroundPriority Enabled="false"/>
+        <LockDirectoriesDuringSync Enabled="true"/>
+        <VerifyCopiedFiles Enabled="false"/>
+        <LogFiles MaxAge="14"/>
+        <NotificationSound CompareFinished="" SyncFinished="gong.wav"/>
+        <ProgressDialog AutoClose="false"/>
+        <OptionalDialogs>
+            <ConfirmStartSync Show="true"/>
+            <ConfirmSaveConfig Show="true"/>
+            <ConfirmExternalCommandMassInvoke Show="true"/>
+            <WarnFolderNotExisting Show="true"/>
+            <WarnUnresolvedConflicts Show="true"/>
+            <WarnNotEnoughDiskSpace Show="true"/>
+            <WarnSignificantDifference Show="true"/>
+            <WarnRecycleBinNotAvailable Show="true"/>
+            <WarnInputFieldEmpty Show="true"/>
+            <WarnModificationTimeError Show="true"/>
+            <WarnDependentFolderPair Show="true"/>
+            <WarnDependentBaseFolders Show="true"/>
+            <WarnDirectoryLockFailed Show="true"/>
+            <WarnVersioningFolderPartOfSync Show="true"/>
+            <WarnBatchLoggingDeprecated Show="true"/>
+        </OptionalDialogs>
+    </General>
+    <Gui>
+        <MainDialog Width="900" Height="548" PosX="1470" PosY="811" Maximized="false">
+            <ManualCopyTo KeepRelativePaths="false" OverwriteIfExists="false">
+                <FolderHistory LastUsedPath="" MaxSize="15"/>
+            </ManualCopyTo>
+            <Search CaseSensitive="false"/>
+            <FolderPairsVisible Max="6"/>
+            <ConfigPanel ScrollPos="0" SyncOverdue="7" SortByColumn="Name" SortAscending="true">
+                <Columns>
+                    <Item Type="Name" Visible="true" Width="-117" Stretch="1"/>
+                    <Item Type="Last" Visible="true" Width="75" Stretch="0"/>
+                    <Item Type="Log" Visible="true" Width="42" Stretch="0"/>
+                </Columns>
+                <Configurations MaxSize="100">
+                    <Item Result="Stopped" CfgPath="/home/redsandro/opt/FreeFileSync/LastRun.ffs_gui" LastSync="0" LogPath=""/>
+                </Configurations>
+                <LastUsed/>
+            </ConfigPanel>
+            <OverviewPanel ShowPercentage="true" SortByColumn="Bytes" SortAscending="false">
+                <Columns>
+                    <Item Type="Tree" Visible="true" Width="-120" Stretch="1"/>
+                    <Item Type="Count" Visible="true" Width="60" Stretch="0"/>
+                    <Item Type="Bytes" Visible="true" Width="60" Stretch="0"/>
+                </Columns>
+            </OverviewPanel>
+            <FilePanel ShowIcons="true" IconSize="Small" SashOffset="0" HistoryMaxSize="15">
+                <ColumnsLeft PathFormat="Relative">
+                    <Item Type="Path" Visible="true" Width="-100" Stretch="1"/>
+                    <Item Type="Ext" Visible="false" Width="60" Stretch="0"/>
+                    <Item Type="Date" Visible="false" Width="140" Stretch="0"/>
+                    <Item Type="Size" Visible="true" Width="100" Stretch="0"/>
+                </ColumnsLeft>
+                <FolderHistoryLeft>
+                    <Item>/home/redsandro/Desktop</Item>
+                </FolderHistoryLeft>
+                <ColumnsRight PathFormat="Relative">
+                    <Item Type="Path" Visible="true" Width="-100" Stretch="1"/>
+                    <Item Type="Ext" Visible="false" Width="60" Stretch="0"/>
+                    <Item Type="Date" Visible="false" Width="140" Stretch="0"/>
+                    <Item Type="Size" Visible="true" Width="100" Stretch="0"/>
+                </ColumnsRight>
+                <FolderHistoryRight>
+                    <Item>/home/redsandro/Desktop</Item>
+                </FolderHistoryRight>
+            </FilePanel>
+            <DefaultViewFilter Equal="false" Conflict="true" Excluded="false">
+                <CategoryView LeftOnly="true" RightOnly="true" LeftNewer="true" RightNewer="true" Different="true"/>
+                <ActionView CreateLeft="true" CreateRight="true" UpdateLeft="true" UpdateRight="true" DeleteLeft="true" DeleteRight="true" DoNothing="true"/>
+            </DefaultViewFilter>
+            <Perspective>layout2|name=CenterPanel;caption=;state=256;dir=5;layer=0;row=0;pos=0;prop=100000;bestw=1208;besth=58;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=TopPanel;caption=Main Bar;state=2099708;dir=1;layer=2;row=1;pos=0;prop=100000;bestw=655;besth=84;minw=180;minh=84;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=ProgressPanel;caption=;state=2097662;dir=1;layer=2;row=2;pos=0;prop=100000;bestw=1010;besth=137;minw=-1;minh=137;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=FoldersPanel;caption=Folder Pairs;state=2099708;dir=1;layer=2;row=3;pos=0;prop=100000;bestw=1208;besth=82;minw=-1;minh=82;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=SearchPanel;caption=Find;state=2099710;dir=3;layer=2;row=3;pos=0;prop=100000;bestw=342;besth=47;minw=100;minh=47;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=LogPanel;caption=Log;state=6293500;dir=3;layer=2;row=2;pos=0;prop=100000;bestw=600;besth=300;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=ViewFilterPanel;caption=View Settings;state=2099708;dir=3;layer=2;row=1;pos=0;prop=100000;bestw=1828;besth=67;minw=100;minh=67;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=ConfigPanel;caption=Configuration;state=2099196;dir=4;layer=3;row=0;pos=0;prop=100000;bestw=325;besth=75;minw=305;minh=75;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=OverviewPanel;caption=Overview;state=2099196;dir=4;layer=3;row=0;pos=1;prop=100000;bestw=300;besth=20;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|dock_size(5,0,0)=362|dock_size(1,2,1)=84|dock_size(1,2,3)=82|dock_size(3,2,1)=67|dock_size(4,3,0)=327|dock_size(3,2,2)=164|</Perspective>
+        </MainDialog>
+        <DefaultExclusionFilter>
+            <Item>/.Trash-*/</Item>
+            <Item>/.recycle/</Item>
+        </DefaultExclusionFilter>
+        <CommandHistory MaxSize="8"/>
+        <ExternalApps>
+            <Item Label="Browse directory">xdg-open "%folder_path%"</Item>
+            <Item Label="Open with default application">xdg-open "%local_path%"</Item>
+        </ExternalApps>
+        <LastOnlineCheck>1536055658</LastOnlineCheck>
+        <LastOnlineVersion>10.3</LastOnlineVersion>
+    </Gui>
+</FreeFileSync>

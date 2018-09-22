@@ -24,7 +24,10 @@
 #- import_tasks: metamorphose2.yml
 - import_tasks: mkvtoolnix.yml
 - import_tasks: nextcloud.yml
+- import_tasks: nvm.yml
+- import_tasks: peek.yml
 - import_tasks: postman.yml
+- import_tasks: robo3t.yml
 - import_tasks: seafile.yml
 - import_tasks: ssh.yml
 - import_tasks: tilix.yml

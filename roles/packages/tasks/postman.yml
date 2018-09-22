@@ -18,6 +18,9 @@
   file:
     path: '/home/{{user}}/opt/Postman'
     state: directory
+    mode: 0750
+    owner: '{{user}}'
+    group: '{{user}}'
 - name: Postman | Download package
   tags: [extras,packages,postman]
   unarchive:
@@ -32,7 +35,7 @@
   get_url:
     url: https://www.getpostman.com/img/v2/products/equation-postman.svg
     dest: '/home/{{user}}/opt/Postman/Postman.svg'
-    mode: 0644
+    mode: 0640
     owner: '{{user}}'
     group: '{{user}}'
 - name: Postman | Create launcher
@@ -40,7 +43,7 @@
   template:
     src: files/Postman.desktop
     dest: '/home/{{user}}/.local/share/applications/Postman.desktop'
-    mode: 0644
+    mode: 0640
     owner: '{{user}}'
     group: '{{user}}'
 - name: Update launcher

@@ -1,31 +1,42 @@
+# env ANSIBLE_NOCOWS=1 sudo ansible-playbook --tags docker local.yml
 ---
 # Get main user
-- name: Get Main User For Scripts
+- name: Docker-CE | Get main user
   tags: [extras,packages,docker]
   shell: id -nu 1000
   register: get_user_by_id
-- name: Register Main User
+- name: Docker-CE | Store main user
   tags: [extras,packages,docker]
   set_fact:
     user: "{{get_user_by_id.stdout}}"
-- debug:
-    var: user
 
-- name: Docker-CE | Add Repository Key
+- name: Docker-CE | Add repo key
   tags: [extras,packages,docker]
-  apt_key: keyserver=keyserver.ubuntu.com id=7EA0A9C3F273FCD8 state=present
-#  apt_key:
-#    url: https://download.docker.com/linux/ubuntu/gpg
-#    state: present
-- name: Docker-CE | Add Repository
+  # apt_key: keyserver=keyserver.ubuntu.com id=7EA0A9C3F273FCD8 state=present
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+- name: Docker-CE | Add repository
   tags: [extras,packages,docker]
   apt_repository:
     repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
     filename: docker
-- name: Docker-CE | Install package
+
+- name: Docker-CE | Remove old packages
   tags: [extras,packages,docker]
   package:
-    name: docker.io
+    name: '{{package}}'
+    state: absent
+  with_items:
+    - docker
+    - docker.io
+  loop_control:
+    loop_var: package
+
+- name: Docker-CE | Install docker-ce
+  tags: [extras,packages,docker]
+  package:
+    name: docker-ce
     state: latest
     update_cache: yes
 - name: Docker-CE | Get docker-compose
@@ -33,14 +44,17 @@
   # TODO: Get latest non-RC release from # https://github.com/docker/compose/releases/
   get_url:
     url: https://github.com/docker/compose/releases/download/1.22.0/docker-compose-Linux-x86_64
-    #dest: /usr/local/bin/docker-compose
     dest: '/home/{{user}}/bin/docker-compose'
-    mode: 0755
+    mode: 0750
     owner: '{{user}}'
     group: '{{user}}'
-- name: Docker-CE | Add User To Group
+
+- name: Docker-CE | Add main user to docker group
   tags: [extras,packages,docker]
   user:
     name: '{{user}}'
     groups: docker
     append: yes
+
+# Set docker to manual load 
+# sudo bash -c 'echo manual | sudo tee /etc/init/docker.override'

@@ -1,0 +1,46 @@
+# env ANSIBLE_NOCOWS=1 sudo ansible-playbook --tags dnsmasq local.yml
+# This one works on Ubuntu 18.04
+# https://askubuntu.com/questions/1029882/how-can-i-set-up-local-wildcard-127-0-0-1-domain-resolution-on-18-04
+---
+- name: DNSMasq | Add Background Image
+  tags: [network,dnsmasq,never]
+  lineinfile:
+    path: /etc/NetworkManager/NetworkManager.conf
+    insertafter: '^\[main\]'
+    line: 'dns=dnsmasq'
+- name: DNSMasq | Check for /etc/resolv.conf-bup
+  tags: [network,dnsmasq,never]
+  stat:
+    path: /etc/resolv.conf-bup
+  register: bup
+- name: DNSMasq | Check for old /etc/resolv.conf
+  tags: [network,dnsmasq,never]
+  stat:
+    path: /etc/resolv.conf
+  register: old_result
+- name: DNSMasq | Backup old /etc/resolv.conf
+  tags: [network,dnsmasq,never]
+  command: mv /etc/resolv.conf /etc/resolv.conf-bup
+  when: not bup.stat.exists and old_result.stat.exists
+- name: DNSMasq | Remove old /etc/resolv.conf
+  tags: [network,dnsmasq,never]
+  command: rm /etc/resolv.conf
+  when: old_result.stat.exists
+- name: DNSMasq | Simlink to /var/run/NetworkManager/resolv.conf
+  tags: [network,dnsmasq,never]
+  command: ln -s /var/run/NetworkManager/resolv.conf /etc/resolv.conf
+- name: DNSMasq | Add wildcard for .test subdomain
+  tags: [network,dnsmasq,never]
+  copy:
+    src: files/test-wildcard.conf
+    dest: /etc/NetworkManager/dnsmasq.d/test-wildcard.conf
+    owner: root
+    group: root
+    mode: 0644
+- name: DNSMasq | Reload NetworkManager
+  tags: [network,dnsmasq,never]
+  systemd:
+    daemon_reload: yes
+    name: NetworkManager
+  # This one is not working. Manually reload:
+  # sudo systemctl reload NetworkManager

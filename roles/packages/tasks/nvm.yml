@@ -1,0 +1,50 @@
+# env ANSIBLE_NOCOWS=1 sudo ansible-playbook --tags nvm local.yml
+---
+# Get main user
+- name: Node Version Manager | Get main user
+  tags: [nvm,never]
+  shell: id -nu 1000
+  register: get_user_by_id
+- name: Node Version Manager | Store main user
+  tags: [nvm,never]
+  set_fact:
+    user: "{{get_user_by_id.stdout}}"
+
+- name: Node Version Manager | Install dependencies
+  tags: [nvm,never]
+  package:
+    name: '{{item}}'
+    state: latest
+  with_items:
+    - curl
+- name: 'Node Version Manager | Install nvm for user "{{user}}"'
+  tags: [nvm,never]
+  #TODO: Check for latest version
+  shell: curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+  register: nvm_install
+  args:
+    warn: false
+  become: yes
+  become_user: '{{user}}'
+  changed_when: '"nvm is already installed" not in nvm_install.stdout'
+
+- name: 'Node Version Manager | Install node for user "{{user}}"'
+  tags: [nvm,never]
+  shell: sudo su - {{user}} -c 'source .nvm/nvm.sh; nvm install 10'
+  register: node_install
+  args:
+    warn: false
+  #FIXME: This never seems to trigger in ansible. Manually run command as root and the line is there. Not in ansible. See debug output below.
+  changed_when: "'is already installed.' not in node_install.stdout"
+
+- name: Node Version Manager | Debug - stdout for nvm install 10
+  tags: [nvm,never]
+  debug: msg="{{ node_install.stdout }}"
+
+- name: Node Version Manager | Install global packages
+  tags: [nvm,never]
+  shell: sudo su - {{user}} -c 'source .nvm/nvm.sh; npm install -g nodemon'
+  register: nodemon_install
+  args:
+    warn: false
+  changed_when: '"updated 1 package" not in nodemon_install.stdout'

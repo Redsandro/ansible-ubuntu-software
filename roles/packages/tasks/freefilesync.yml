@@ -2,11 +2,11 @@
 ---
 # Get main user for certain packages
 - name: Get Main User For Scripts
-  tags: [extras,packages,freefilesync]
+  tags: [extras,packages,freefilesync,ffs-config]
   shell: id -nu 1000
   register: get_user_by_id
 - name: Register Main User
-  tags: [extras,packages,freefilesync]
+  tags: [extras,packages,freefilesync,ffs-config]
   set_fact:
     user: "{{get_user_by_id.stdout}}"
 - debug:
@@ -17,9 +17,13 @@
   file:
     path: '/home/{{user}}/opt/FreeFileSync'
     state: directory
-- name: FreeFileSync | Grab 18.04 download link
+    mode: 0750
+    owner: '{{user}}'
+    group: '{{user}}'
+
+- name: FreeFileSync | Grab download link
   tags: [extras,packages,freefilesync]
-  shell: wget -O - https://www.freefilesync.org/download.php | grep 'FreeFileSync_10.2_Linux_64-bit.tar.gz' | sed -n 's/.*href="\(.*\)".*/\1/p'
+  shell: wget -O - https://www.freefilesync.org/download.php | grep 'FreeFileSync_' | grep '_Linux_64-bit.tar.gz' | sed -n 's/.*href="\(.*\)".*/\1/p'
   register: freefilesync_url
 - name: FreeFileSync | Download package
   tags: [extras,packages,freefilesync]
@@ -28,6 +32,7 @@
     dest: '/home/{{user}}/opt/FreeFileSync'
     remote_src: yes
     extra_opts: [--strip-components=1]
+    mode: o-rwx
     owner: '{{user}}'
     group: '{{user}}'
 - name: FreeFileSync | Download Logo
@@ -35,15 +40,16 @@
   get_url:
     url: https://www.freefilesync.org/images/FreeFileSync.png
     dest: '/home/{{user}}/opt/FreeFileSync/FreeFileSync.png'
-    mode: 0644
+    mode: 0640
     owner: '{{user}}'
     group: '{{user}}'
+
 - name: FreeFileSync | Create Launcher
   tags: [extras,packages,freefilesync]
   template:
     src: files/FreeFileSync.desktop
     dest: '/home/{{user}}/.local/share/applications/FreeFileSync.desktop'
-    mode: 0644
+    mode: 0640
     owner: '{{user}}'
     group: '{{user}}'
 - name: FreeFileSync | Update Launcher
@@ -55,6 +61,7 @@
   with_items:
     - { key: 'Exec', value: '/home/{{user}}/opt/FreeFileSync/FreeFileSync' }
     - { key: 'Icon', value: '/home/{{user}}/opt/FreeFileSync/FreeFileSync.png' }
+
 - name: FreeFileSync | Symlink
   tags: [extras,packages,freefilesync]
   file:
@@ -63,26 +70,33 @@
     state: link
     owner: '{{user}}'
     group: '{{user}}'
+
+- name: FreeFileSync | Create Config
+  tags: [extras,packages,freefilesync,ffs-config]
+  template:
+    src: files/FreeFileSync.xml
+    dest: '/home/{{user}}/opt/FreeFileSync/GlobalSettings.xml'
+    mode: 0640
+    owner: '{{user}}'
+    group: '{{user}}'
+
 - name: FreeFileSync | Update config - Remove external apps
-  tags: [extras,packages,freefilesync,test121]
+  tags: [extras,packages,freefilesync,ffs-config]
   xml:
     path: '/home/{{user}}/opt/FreeFileSync/GlobalSettings.xml'
     xpath: /FreeFileSync/Gui/ExternalApps/*
     state: absent
 - name: FreeFileSync | Update config
-  tags: [extras,packages,freefilesync,test121]
+  tags: [extras,packages,freefilesync,ffs-config]
   xml:
     path: '/home/{{user}}/opt/FreeFileSync/GlobalSettings.xml'
     xpath: /FreeFileSync/Gui/ExternalApps
-    add_children:
-      - Item:
-          _:
-            - one: "{{item.one}}"
-            - two: "{{item.two}}"
+    add_children: '<Item Label="{{item.label}}">{{item.command}}</Item>'
+    input_type: xml
   with_items:
-    - one: Browse directory
-      two: xdg-open "%folder_path%"
-    - one: Open with default application
-      two: xdg-open "%local_path%"
-    - one: Compare with meld
-      two: meld "%local_path%" "%local_path2%"
+    - label: Browse directory
+      command: xdg-open "%folder_path%"
+    - label: Open with default application
+      command: xdg-open "%local_path%"
+    - label: Compare with meld
+      command: meld "%local_path%" "%local_path2%"

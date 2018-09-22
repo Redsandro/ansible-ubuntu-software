@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Robo3T
+Comment=MongoDB Manager
+Exec=/home/{{user}}/opt/Robo3T/bin/robo3t
+Icon=robo3t.png
+Type=Application
+Terminal=false
+Categories=Utility;Development;
+StartupNotify=true

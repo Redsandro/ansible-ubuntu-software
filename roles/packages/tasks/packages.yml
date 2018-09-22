@@ -46,6 +46,7 @@
     - openssh-client
 #    - pdfchain # not in Mint 19
     - pixz
+    - puddletag
     - pv
 #    - pyrenamer # not in Mint 19
     - python-termcolor
