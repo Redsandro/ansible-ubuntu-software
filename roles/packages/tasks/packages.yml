@@ -49,6 +49,8 @@
     - puddletag
     - pv
 #    - pyrenamer # not in Mint 19
+    - pip
+    - pylint
     - python-termcolor
     - python-keyring
     - python-vsgui

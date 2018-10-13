@@ -1,11 +1,15 @@
+# Ansible for upgrade purposes.
+# For initial latest version, manually install:
+# sudo apt-add-repository ppa:ansible/ansible
+# sudo apt update && sudo apt install ansible
 ---
 - name: Ansible | Add repository
-  tags: [extras,packages,ansible]
+  tags: [ansible,never]
   apt_repository:
     repo: ppa:ansible/ansible
     codename: bionic
 - name: Ansible | Install package
-  tags: [extras,packages,ansible]
+  tags: [ansible,never]
   package:
     name: ansible
     state: latest

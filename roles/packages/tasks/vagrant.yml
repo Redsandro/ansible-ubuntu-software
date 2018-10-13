@@ -1,9 +1,10 @@
+# sudo ansible-playbook local.yml -t vagrant
 ---
 - name: Vagrant | Find latest version
-  tags: [never,extras,packages,vagrant]
-  shell: wget -O - https://www.vagrantup.com/downloads.html | grep x86_64.deb | head -n1 | sed -n 's/.*<a href="\([^"]*\)".*/\1/p'
+  tags: [never,extras,vagrant]
+  shell: wget -O - https://www.vagrantup.com/downloads.html | grep x86_64.deb | head -n1 | sed -n 's/.*href="\([^"]*\)".*/\1/p'
   register: deb_url
 - name: Vagrant | Install package
-  tags: [never,extras,packages,vagrant]
+  tags: [never,extras,vagrant]
   apt:
     deb: '{{deb_url.stdout}}'
