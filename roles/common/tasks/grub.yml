@@ -1,3 +1,4 @@
+# sudo ansible-playbook local.yml -t grub
 ---
 # Note: This one is only relevant with multiple boot options
 - name: Grub | Add Background Image

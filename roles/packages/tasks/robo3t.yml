@@ -23,7 +23,7 @@
 
 - name: Robo3T | Grab download link
   tags: [extras,packages,robo3t]
-  shell: wget -O - https://robomongo.org/download | grep 'linux-x86_64' | grep '.tar.gz' | sed -n 's/.*href="\(.*\)">robo3t-1.2.1-linux-x86_64.*/\1/p'
+  shell: wget -O - https://robomongo.org/download | grep 'linux-x86_64' | grep '.tar.gz' | sed -n 's/.*href="\(.*\)">robo3t-[0-9\.]*-linux-x86_64.*/\1/p'
   args:
     warn: false
   register: robo3t_url
