@@ -1,5 +1,15 @@
 # sudo ansible-playbook local.yml -t virtualbox
 ---
+# Get main user
+- name: VirtualBox | Get main user
+  tags: [never,extras,virtualbox]
+  shell: id -nu 1000
+  register: get_user_by_id
+- name: Docker-CE | Store main user
+  tags: [extras,packages,docker]
+  set_fact:
+    user: "{{get_user_by_id.stdout}}"
+
 - name: VirtualBox | Add repository key
   tags: [never,extras,virtualbox]
   apt_key:
@@ -47,3 +57,10 @@
   tags: [never,extras,virtualbox]
   shell: "echo y | vboxmanage extpack install --replace /tmp/{{extpack_filename.stdout}}"
   when: vbox.changed
+
+- name: VirtualBox | Add main user to vboxusers group
+  tags: [never,extras,virtualbox]
+  user:
+    name: '{{user}}'
+    groups: vboxusers
+    append: yes

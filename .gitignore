@@ -1,2 +1,3 @@
 **/*.retry
 /fetched
+hosts.ini

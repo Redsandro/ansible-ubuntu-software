@@ -36,6 +36,7 @@
     - hddtemp
     - hdparm
     - imagemagick
+    - jq
     - keepassx
     - lmms
     - mediainfo-gui

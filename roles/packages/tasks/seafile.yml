@@ -1,5 +1,6 @@
 # sudo env ANSIBLE_NOCOWS=1 ansible-playbook --tags seafile local.yml
 ---
+# TODO: /etc/sysctl.d/101-sync-inotify.conf
 - name: Seafile | Add 3rd party PPA
   tags: [extras,packages,seafile]
   apt_repository:
