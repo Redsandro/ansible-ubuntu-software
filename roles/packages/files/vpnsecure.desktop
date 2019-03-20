@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=VPN·Secure
+Comment=VPN Client
+Exec=/etc/vpnsecure/vpnsecure
+Icon=/etc/vpnsecure/icon.png
+Type=Application
+Terminal=false
+Categories=Utility;Network;
+StartupNotify=true

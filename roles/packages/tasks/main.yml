@@ -30,10 +30,12 @@
 - import_tasks: robo3t.yml
 - import_tasks: seafile.yml
 - import_tasks: ssh.yml
+# - import_tasks: stacer.yml
 - import_tasks: tilix.yml
 - import_tasks: tlp.yml
 - import_tasks: vagrant.yml
 - import_tasks: virtualbox.yml
+- import_tasks: vpnsecure.yml
 - import_tasks: webdav.yml
 - import_tasks: wine.yml
 - import_tasks: xnviewmp.yml

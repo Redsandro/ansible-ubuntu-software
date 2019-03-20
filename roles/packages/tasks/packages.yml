@@ -53,6 +53,7 @@
     - pip
     - pylint
     - python-termcolor
+    - python3-termcolor
     - python-keyring
     - python-vsgui
     - rkhunter

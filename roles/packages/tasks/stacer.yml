@@ -1,0 +1,20 @@
+#TODO: Delete this package. Doesn't work on UHD.
+---
+- name: Stacer | Add 3rd party PPA
+  tags: [extras,never,stacer]
+  apt_repository:
+    repo: ppa:oguzhaninan/stacer
+    codename: bionic
+- name: Stacer | Install package
+  tags: [extras,never,stacer]
+  package:
+    name: stacer
+    state: latest
+    update_cache: yes
+# - name: Stacer | Remove 3rd party PPA
+#   tags: [extras,never,stacer]
+#   apt_repository:
+#     repo: ppa:oguzhaninan/stacer
+#     codename: bionic
+#     state: absent
+#     update_cache: yes

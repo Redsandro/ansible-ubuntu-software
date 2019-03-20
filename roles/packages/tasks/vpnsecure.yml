@@ -1,0 +1,32 @@
+# sudo env ANSIBLE_NOCOWS=1 ansible-playbook --tags vpnsecure local.yml
+---
+
+# Get main user for certain packages
+- name: Get Main User For Scripts
+  tags: [extras,never,vpnsecure]
+  shell: id -nu 1000
+  register: get_user_by_id
+- name: Register Main User
+  tags: [extras,never,vpnsecure]
+  set_fact:
+    user: "{{get_user_by_id.stdout}}"
+- debug:
+    var: user
+
+- name: VpnSecure | Dowload installer
+  tags: [extras,never,vpnsecure]
+  get_url:
+    url: https://www.vpnsecure.me/files/install
+    dest: /tmp/vpnsecure-installer
+    mode: 0750
+- name: VpnSecure | Start installer
+  tags: [extras,never,vpnsecure]
+  shell: /tmp/vpnsecure-installer
+- name: VpnSecure | Create launcher
+  tags: [extras,never,vpnsecure]
+  template:
+    src: files/vpnsecure.desktop
+    dest: '/home/{{user}}/.local/share/applications/vpnsecure.desktop'
+    mode: 0640
+    owner: '{{user}}'
+    group: '{{user}}'
