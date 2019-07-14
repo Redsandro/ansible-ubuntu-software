@@ -1,11 +1,11 @@
 ---
 - name: Tilix | Add repository
-  tags: [extras,packages,tilix]
+  tags: [never,extras,3rd-packages,packages,tilix]
   apt_repository:
     repo: ppa:webupd8team/terminix
     codename: bionic
 - name: Tilix | Install package
-  tags: [extras,packages,tilix]
+  tags: [never,extras,3rd-packages,packages,tilix]
   package:
     name: tilix
     state: latest

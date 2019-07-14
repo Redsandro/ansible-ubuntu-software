@@ -1,10 +1,10 @@
 # sudo env ANSIBLE_NOCOWS=1 ansible-playbook --tags boostnote local.yml
 ---
 - name: BoostNote | Find Package
-  tags: [extras,packages,boostnote]
+  tags: [extras,3rd-packages,packages,boostnote]
   shell: wget -O - https://github.com/BoostIO/boost-releases/releases | grep _amd64.deb | head -n1 | sed -n 's/.*<a href="\([^"]*\)".*/\1/p'
   register: boostnote_url
 - name: BoostNote | Install Package
-  tags: [extras,packages,boostnote]
+  tags: [extras,3rd-packages,packages,boostnote]
   apt:
     deb: "https://github.com{{boostnote_url.stdout}}"

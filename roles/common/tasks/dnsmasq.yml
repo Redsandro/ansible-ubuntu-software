@@ -2,12 +2,13 @@
 # This one works on Ubuntu 18.04
 # https://askubuntu.com/questions/1029882/how-can-i-set-up-local-wildcard-127-0-0-1-domain-resolution-on-18-04
 ---
-- name: DNSMasq | Add Background Image
+- name: DNSMasq | Configure NetworkManager
   tags: [network,dnsmasq,never]
   lineinfile:
     path: /etc/NetworkManager/NetworkManager.conf
     insertafter: '^\[main\]'
     line: 'dns=dnsmasq'
+
 - name: DNSMasq | Check for /etc/resolv.conf-bup
   tags: [network,dnsmasq,never]
   stat:
@@ -22,10 +23,21 @@
   tags: [network,dnsmasq,never]
   command: mv /etc/resolv.conf /etc/resolv.conf-bup
   when: not bup.stat.exists and old_result.stat.exists
+- name: DNSMasq | Check for old /etc/resolv.conf again
+  tags: [network,dnsmasq,never]
+  stat:
+    path: /etc/resolv.conf
+  register: old_result2
 - name: DNSMasq | Remove old /etc/resolv.conf
   tags: [network,dnsmasq,never]
   command: rm /etc/resolv.conf
-  when: old_result.stat.exists
+  when: old_result2.stat.exists
+
+- name: DNSMasq | Install Package
+  tags: [network,dnsmasq,never]
+  package:
+    name: dnsmasq
+    state: latest
 - name: DNSMasq | Simlink to /var/run/NetworkManager/resolv.conf
   tags: [network,dnsmasq,never]
   command: ln -s /var/run/NetworkManager/resolv.conf /etc/resolv.conf
@@ -44,3 +56,28 @@
     name: NetworkManager
   # This one is not working. Manually reload:
   # sudo systemctl reload NetworkManager
+
+
+# ```bash
+# sudo sed -e '/DNSStubListener=no/ s/^#*/#/' -i /etc/systemd/resolved.conf
+# sudo apt install dnsmasq
+# echo "listen-address=127.0.0.1" | sudo tee --append /etc/dnsmasq.conf
+# echo "bind-interfaces" | sudo tee --append /etc/dnsmasq.conf
+# echo "address=/.localhost/127.0.0.1" | sudo tee --append /etc/dnsmasq.conf
+# echo "address=/.test/127.0.0.1" | sudo tee --append /etc/dnsmasq.conf
+# echo "address=/.et.test/127.0.0.1" | sudo tee --append /etc/dnsmasq.conf
+#
+# # Kill old dnsmasq
+# sudo killall -9 dnsmasq
+# sudo service dnsmasq restart
+#
+# #prepend domain-name-servers 127.0.0.1;
+# sudo sed -e '/prepend domain-name-servers 127.0.0.1;/ s/^#//' -i /etc/dhcp/dhclient.conf
+# sudo service network-manager restart
+# ```
+#
+# ```bash
+# sudo service systemd-resolved restart
+# sudo service dnsmasq start
+# sudo service NetworkManager restart
+# ```

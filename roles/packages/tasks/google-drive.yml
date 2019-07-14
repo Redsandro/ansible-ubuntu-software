@@ -1,11 +1,11 @@
 ---
 - name: Google Drive | Add Repository
-  tags: [extras,packages,google-drive]
+  tags: [extras,3rd-packages,packages,google-drive,never]
   apt_repository:
     repo: ppa:alessandro-strada/ppa
     codename: bionic
 - name: Google Drive | Install package
-  tags: [extras,packages,google-drive]
+  tags: [extras,3rd-packages,packages,google-drive,never]
   package:
     name: google-drive-ocamlfuse
     state: latest

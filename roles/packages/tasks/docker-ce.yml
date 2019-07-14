@@ -2,28 +2,28 @@
 ---
 # Get main user
 - name: Docker-CE | Get main user
-  tags: [extras,packages,docker]
+  tags: [extras,3rd-packages,packages,docker,docker-ce]
   shell: id -nu 1000
   register: get_user_by_id
 - name: Docker-CE | Store main user
-  tags: [extras,packages,docker]
+  tags: [extras,3rd-packages,packages,docker,docker-ce]
   set_fact:
     user: "{{get_user_by_id.stdout}}"
 
 - name: Docker-CE | Add repo key
-  tags: [extras,packages,docker]
+  tags: [extras,3rd-packages,packages,docker,docker-ce]
   # apt_key: keyserver=keyserver.ubuntu.com id=7EA0A9C3F273FCD8 state=present
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
     state: present
 - name: Docker-CE | Add repository
-  tags: [extras,packages,docker]
+  tags: [extras,3rd-packages,packages,docker,docker-ce]
   apt_repository:
     repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
     filename: docker
 
 - name: Docker-CE | Remove old packages
-  tags: [extras,packages,docker]
+  tags: [extras,3rd-packages,packages,docker,docker-ce]
   package:
     name: '{{package}}'
     state: absent
@@ -34,27 +34,27 @@
     loop_var: package
 
 - name: Docker-CE | Install docker-ce
-  tags: [extras,packages,docker]
+  tags: [extras,3rd-packages,packages,docker,docker-ce]
   package:
     name: docker-ce
     state: latest
     update_cache: yes
 - name: Docker-CE | Get docker-compose
-  tags: [extras,packages,docker]
+  tags: [extras,3rd-packages,packages,docker,docker-ce]
   # TODO: Get latest non-RC release from # https://github.com/docker/compose/releases/
   get_url:
-    url: https://github.com/docker/compose/releases/download/1.22.0/docker-compose-Linux-x86_64
+    url: https://github.com/docker/compose/releases/download/1.24.0/docker-compose-Linux-x86_64
     dest: '/home/{{user}}/bin/docker-compose'
     mode: 0750
     owner: '{{user}}'
     group: '{{user}}'
 
 - name: Docker-CE | Add main user to docker group
-  tags: [extras,packages,docker]
+  tags: [extras,3rd-packages,packages,docker,docker-ce]
   user:
     name: '{{user}}'
     groups: docker
     append: yes
 
-# Set docker to manual load 
+# Set docker to manual load
 # sudo bash -c 'echo manual | sudo tee /etc/init/docker.override'

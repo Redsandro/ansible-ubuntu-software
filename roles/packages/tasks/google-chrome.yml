@@ -3,21 +3,23 @@
 #    url: https://dl-ssl.google.com/linux/linux_signing_key.pub
 #    state: present
 - name: Google Chrome | Add Repository Key
-  tags: [extras,packages,google-chrome]
-  apt_key: keyserver=keyserver.ubuntu.com id=1397BC53640DB551 state=present
+  tags: [extras,3rd-packages,packages,google-chrome]
+  apt_key:
+    url: https://dl.google.com/linux/linux_signing_key.pub
+    state: present
 - name: Google Chrome | Add Repository
-  tags: [extras,packages,google-chrome]
+  tags: [extras,3rd-packages,packages,google-chrome]
   apt_repository:
     repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
     filename: google-chrome
 - name: Google Chrome | Install package
-  tags: [extras,packages,google-chrome]
+  tags: [extras,3rd-packages,packages,google-chrome]
   package:
     name: google-chrome-unstable
     state: latest
     update_cache: yes
 - name: Google Chrome | Remove double repo
-  tags: [extras,packages,google-chrome]
+  tags: [extras,3rd-packages,packages,google-chrome]
   file:
     path: /etc/apt/sources.list.d/google-chrome-unstable.list
     state: absent

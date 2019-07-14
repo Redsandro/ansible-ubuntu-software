@@ -1,10 +1,10 @@
 ---
 - name: Packages | Update Cache
-  tags: [extras,packages,official]
+  tags: [packages,official]
   apt:
     update_cache: yes
 - name: Packages | Install Official Packages
-  tags: [extras,packages,official]
+  tags: [packages,official]
   package:
     name: "{{ item }}"
     state: latest
@@ -26,18 +26,19 @@
     - fslint
     - geany
     - geany-plugins
-#    - geany-plugin-markdown # not in Mint 19
+   # - geany-plugin-markdown # not in Mint 19
     - gimp
     - git
     - gitk
     - gmpc
+    - gpac
     - gparted
     - gprename
     - hddtemp
     - hdparm
     - imagemagick
     - jq
-    - keepassx
+    # - keepassx
     - lmms
     - mediainfo-gui
     - meld
@@ -45,12 +46,12 @@
     - mpv
     - ocrfeeder
     - openssh-client
-#    - pdfchain # not in Mint 19
+   # - pdfchain # not in Mint 19
     - pixz
     - puddletag
     - pv
-#    - pyrenamer # not in Mint 19
-    - pip
+   # - pyrenamer # not in Mint 19
+    - python-pip
     - pylint
     - python-termcolor
     - python3-termcolor
@@ -67,7 +68,7 @@
     - xclip
     - youtube-dl
 - name: Packages | Remove Unwanted Packages
-  tags: [extras,packages,packages,official]
+  tags: [packages,official]
   package:
     name: "{{ item }}"
     state: absent

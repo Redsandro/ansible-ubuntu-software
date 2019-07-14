@@ -2,18 +2,18 @@
 ---
 # Get main user for certain packages
 - name: Get Main User For Scripts
-  tags: [extras,packages,freefilesync,ffs-config]
+  tags: [extras,3rd-packages,packages,freefilesync,ffs-config]
   shell: id -nu 1000
   register: get_user_by_id
 - name: Register Main User
-  tags: [extras,packages,freefilesync,ffs-config]
+  tags: [extras,3rd-packages,packages,freefilesync,ffs-config]
   set_fact:
     user: "{{get_user_by_id.stdout}}"
 - debug:
     var: user
 
 - name: FreeFileSync | mkdir
-  tags: [extras,packages,freefilesync]
+  tags: [extras,3rd-packages,packages,freefilesync]
   file:
     path: '/home/{{user}}/opt/FreeFileSync'
     state: directory
@@ -22,11 +22,11 @@
     group: '{{user}}'
 
 - name: FreeFileSync | Grab download link
-  tags: [extras,packages,freefilesync]
-  shell: wget -O - https://www.freefilesync.org/download.php | grep 'FreeFileSync_' | grep '_Linux_64-bit.tar.gz' | sed -n 's/.*href="\(.*\)".*/\1/p'
+  tags: [extras,3rd-packages,packages,freefilesync]
+  shell: wget -O - https://www.freefilesync.org/download.php | grep 'FreeFileSync_' | grep '_Linux.tar.gz' | sed -n 's/.*href="\(.*\)".*/\1/p'
   register: freefilesync_url
 - name: FreeFileSync | Download package
-  tags: [extras,packages,freefilesync]
+  tags: [extras,3rd-packages,packages,freefilesync]
   unarchive:
     src: 'https://www.freefilesync.org{{freefilesync_url.stdout}}'
     dest: '/home/{{user}}/opt/FreeFileSync'
@@ -36,7 +36,7 @@
     owner: '{{user}}'
     group: '{{user}}'
 - name: FreeFileSync | Download Logo
-  tags: [extras,packages,freefilesync]
+  tags: [extras,3rd-packages,packages,freefilesync]
   get_url:
     url: https://www.freefilesync.org/images/FreeFileSync.png
     dest: '/home/{{user}}/opt/FreeFileSync/FreeFileSync.png'
@@ -45,7 +45,7 @@
     group: '{{user}}'
 
 - name: FreeFileSync | Create Launcher
-  tags: [extras,packages,freefilesync]
+  tags: [extras,3rd-packages,packages,freefilesync]
   template:
     src: files/FreeFileSync.desktop
     dest: '/home/{{user}}/.local/share/applications/FreeFileSync.desktop'
@@ -53,7 +53,7 @@
     owner: '{{user}}'
     group: '{{user}}'
 - name: FreeFileSync | Update Launcher
-  tags: [extras,packages,freefilesync]
+  tags: [extras,3rd-packages,packages,freefilesync]
   lineinfile:
     path: '/home/{{user}}/.local/share/applications/FreeFileSync.desktop'
     regexp: '^{{item.key}}='
@@ -63,7 +63,7 @@
     - { key: 'Icon', value: '/home/{{user}}/opt/FreeFileSync/FreeFileSync.png' }
 
 - name: FreeFileSync | Symlink
-  tags: [extras,packages,freefilesync]
+  tags: [extras,3rd-packages,packages,freefilesync]
   file:
     src: '/home/{{user}}/opt/FreeFileSync/FreeFileSync'
     dest: '/home/{{user}}/bin/FreeFileSync'
@@ -72,7 +72,7 @@
     group: '{{user}}'
 
 - name: FreeFileSync | Create Config
-  tags: [extras,packages,freefilesync,ffs-config]
+  tags: [extras,3rd-packages,packages,freefilesync,ffs-config]
   template:
     src: files/FreeFileSync.xml
     dest: '/home/{{user}}/opt/FreeFileSync/GlobalSettings.xml'
@@ -81,13 +81,13 @@
     group: '{{user}}'
 
 - name: FreeFileSync | Update config - Remove external apps
-  tags: [extras,packages,freefilesync,ffs-config]
+  tags: [extras,3rd-packages,packages,freefilesync,ffs-config]
   xml:
     path: '/home/{{user}}/opt/FreeFileSync/GlobalSettings.xml'
     xpath: /FreeFileSync/Gui/ExternalApps/*
     state: absent
 - name: FreeFileSync | Update config
-  tags: [extras,packages,freefilesync,ffs-config]
+  tags: [extras,3rd-packages,packages,freefilesync,ffs-config]
   xml:
     path: '/home/{{user}}/opt/FreeFileSync/GlobalSettings.xml'
     xpath: /FreeFileSync/Gui/ExternalApps

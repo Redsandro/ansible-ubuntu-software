@@ -1,11 +1,11 @@
 ---
 - name: aviDemux | Add 3rd Party PPA
-  tags: [extras,packages,avidemux]
+  tags: [extras,3rd-packages,packages,avidemux]
   apt_repository:
     repo: ppa:ubuntuhandbook1/avidemux
     codename: bionic
 - name: aviDemux | Install package
-  tags: [extras,packages,avidemux]
+  tags: [extras,3rd-packages,packages,avidemux]
   package:
     name: '{{ package }}'
     state: latest
@@ -17,7 +17,7 @@
   loop_control:
     loop_var: package
 - name: aviDemux | Remove 3rd party PPA
-  tags: [extras,packages,avidemux]
+  tags: [extras,3rd-packages,packages,avidemux]
   apt_repository:
     repo: ppa:ubuntuhandbook1/avidemux
     codename: bionic

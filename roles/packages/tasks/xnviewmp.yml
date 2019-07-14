@@ -1,5 +1,5 @@
 ---
 - name: XnViewMP | Install .deb package
-  tags: [extras,packages,xnviewmp]
+  tags: [extras,3rd-packages,packages,xnviewmp]
   apt:
     deb: https://download.xnview.com/XnViewMP-linux-x64.deb

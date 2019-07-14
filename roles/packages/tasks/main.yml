@@ -14,12 +14,13 @@
 - import_tasks: dbeaver-ce.yml
 - import_tasks: deadbeef.yml
 - import_tasks: docker-ce.yml
-- import_tasks: dropbox.yml
 - import_tasks: etcher.yml
 - import_tasks: firefox-touch.yml
 - import_tasks: freefilesync.yml
 - import_tasks: google-chrome.yml
 - import_tasks: google-drive.yml
+- import_tasks: keepassxc.yml
+- import_tasks: kritalime.yml
 - import_tasks: master-pdf-editor.yml
 #- import_tasks: metamorphose2.yml
 - import_tasks: mkvtoolnix.yml
@@ -30,6 +31,7 @@
 - import_tasks: robo3t.yml
 - import_tasks: seafile.yml
 - import_tasks: ssh.yml
+- import_tasks: syncthing.yml
 # - import_tasks: stacer.yml
 - import_tasks: tilix.yml
 - import_tasks: tlp.yml

@@ -3,18 +3,18 @@
 
 # Get main user for certain packages
 - name: Get Main User For Scripts
-  tags: [extras,packages,postman]
+  tags: [extras,3rd-packages,packages,postman]
   shell: id -nu 1000
   register: get_user_by_id
 - name: Register Main User
-  tags: [extras,packages,postman]
+  tags: [extras,3rd-packages,packages,postman]
   set_fact:
     user: "{{get_user_by_id.stdout}}"
 - debug:
     var: user
 
 - name: Postman | mkdir
-  tags: [extras,packages,postman]
+  tags: [extras,3rd-packages,packages,postman]
   file:
     path: '/home/{{user}}/opt/Postman'
     state: directory
@@ -22,7 +22,7 @@
     owner: '{{user}}'
     group: '{{user}}'
 - name: Postman | Download package
-  tags: [extras,packages,postman]
+  tags: [extras,3rd-packages,packages,postman]
   unarchive:
     src: https://dl.pstmn.io/download/latest/linux64
     dest: '/home/{{user}}/opt/Postman'
@@ -31,7 +31,7 @@
     owner: '{{user}}'
     group: '{{user}}'
 - name: Postman | Download Logo
-  tags: [extras,packages,postman]
+  tags: [extras,3rd-packages,packages,postman]
   get_url:
     url: https://www.getpostman.com/img/v2/products/equation-postman.svg
     dest: '/home/{{user}}/opt/Postman/Postman.svg'
@@ -39,7 +39,7 @@
     owner: '{{user}}'
     group: '{{user}}'
 - name: Postman | Create launcher
-  tags: [extras,packages,postman]
+  tags: [extras,3rd-packages,packages,postman]
   template:
     src: files/Postman.desktop
     dest: '/home/{{user}}/.local/share/applications/Postman.desktop'
@@ -47,7 +47,7 @@
     owner: '{{user}}'
     group: '{{user}}'
 - name: Update launcher
-  tags: [extras,packages,postman]
+  tags: [extras,3rd-packages,packages,postman]
   lineinfile:
     path: '/home/{{user}}/.local/share/applications/Postman.desktop'
     regexp: '^{{item.key}}='

@@ -2,18 +2,18 @@
 ---
 
 - name: Robo3T | Get main user
-  tags: [extras,packages,robo3t]
+  tags: [extras,3rd-packages,packages,robo3t]
   shell: id -nu 1000
   register: get_user_by_id
 - name: Robo3T | Register main user
-  tags: [extras,packages,robo3t]
+  tags: [extras,3rd-packages,packages,robo3t]
   set_fact:
     user: "{{get_user_by_id.stdout}}"
 - debug:
     var: user
 
 - name: Robo3T | mkdir
-  tags: [extras,packages,robo3t]
+  tags: [extras,3rd-packages,packages,robo3t]
   file:
     path: '/home/{{user}}/opt/Robo3T'
     state: directory
@@ -22,13 +22,13 @@
     group: '{{user}}'
 
 - name: Robo3T | Grab download link
-  tags: [extras,packages,robo3t]
+  tags: [extras,3rd-packages,packages,robo3t]
   shell: wget -O - https://robomongo.org/download | grep 'linux-x86_64' | grep '.tar.gz' | sed -n 's/.*href="\(.*\)">robo3t-[0-9\.]*-linux-x86_64.*/\1/p'
   args:
     warn: false
   register: robo3t_url
 - name: Robo3T | Download package
-  tags: [extras,packages,robo3t]
+  tags: [extras,3rd-packages,packages,robo3t]
   unarchive:
     src: '{{robo3t_url.stdout}}'
     dest: '/home/{{user}}/opt/Robo3T'
@@ -39,7 +39,7 @@
 
 # Necessary, given https://github.com/ansible/ansible/issues/35426
 - name: Robo3T | Fix permissions
-  tags: [extras,packages,robo3t]
+  tags: [extras,3rd-packages,packages,robo3t]
   file:
     path: '/home/{{user}}/opt/Robo3T'
     owner: '{{user}}'
@@ -48,7 +48,7 @@
     recurse: yes
 
 - name: Robo3T | Create launcher
-  tags: [extras,packages,robo3t]
+  tags: [extras,3rd-packages,packages,robo3t]
   template:
     src: files/Robo3T.desktop
     dest: '/home/{{user}}/.local/share/applications/Robo3T.desktop'
@@ -57,7 +57,7 @@
     group: '{{user}}'
 
 - name: Robo3T | Set logo
-  tags: [extras,packages,robo3t]
+  tags: [extras,3rd-packages,packages,robo3t]
   copy:
     src: files/robo3t.png
     dest: '/home/{{user}}/.local/share/icons/robo3t.png'
@@ -66,7 +66,7 @@
     group: '{{user}}'
 
 # - name: Update launcher
-#   tags: [extras,packages,robo3t]
+#   tags: [extras,3rd-packages,packages,robo3t]
 #   lineinfile:
 #     path: '/home/{{user}}/.local/share/applications/Robo3T.desktop'
 #     regexp: '^{{item.key}}='

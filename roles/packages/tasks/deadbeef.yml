@@ -1,17 +1,17 @@
 ---
 - name: DeadBeef | Add 3rd party PPA
-  tags: [extras,packages,deadbeef]
+  tags: [extras,3rd-packages,packages,deadbeef]
   apt_repository:
     repo: ppa:starws-box/deadbeef-player
     codename: bionic
 - name: DeadBeef | Install package
-  tags: [extras,packages,deadbeef]
+  tags: [extras,3rd-packages,packages,deadbeef]
   package:
     name: deadbeef
     state: latest
     update_cache: yes
 - name: DeadBeef | Remove 3rd party PPA
-  tags: [extras,packages,deadbeef]
+  tags: [extras,3rd-packages,packages,deadbeef]
   apt_repository:
     repo: ppa:starws-box/deadbeef-player
     codename: bionic

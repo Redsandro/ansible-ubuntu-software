@@ -1,16 +1,16 @@
 # sudo env ANSIBLE_NOCOWS=1 ansible-playbook local.yml --tags peek
 ---
 # - name: Peek | Add Peek Repository Key
-#   tags: [extras,packages,peek]
+#   tags: [extras,3rd-packages,packages,peek]
 #   apt_key: keyserver=keyserver.ubuntu.com id=4C6E74D6C0A35108 state=present
 - name: Peek | Add repository
-  tags: [extras,packages,peek]
+  tags: [extras,3rd-packages,packages,peek]
   apt_repository:
     repo: ppa:peek-developers/stable
     codename: xenial
 
 - name: Peek | Install package
-  tags: [extras,packages,peek]
+  tags: [extras,3rd-packages,packages,peek]
   package:
     name: peek
     state: latest

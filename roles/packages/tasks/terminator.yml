@@ -1,12 +1,12 @@
 # sudo env ANSIBLE_NOCOWS=1 ansible-playbook --tags terminator local.yml
 ---
 - name: Terminator | Add repository
-  tags: [extras,packages,terminator]
+  tags: [never,extras,3rd-packages,packages,terminator]
   apt_repository:
     repo: ppa:gnome-terminator
     codename: bionic
 - name: Terminator | Install package
-  tags: [extras,packages,terminator]
+  tags: [never,extras,3rd-packages,packages,terminator]
   package:
     name: terminator
     state: latest

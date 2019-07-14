@@ -1,20 +1,25 @@
-# sudo env ANSIBLE_NOCOWS=1 ansible-playbook --tags etcher local.yml
+# sudo env ANSIBLE_NOCOWS=1 ansible-playbook --tags albert local.yml
 ---
+- name: Albert | Define releases
+  tags: [extras,3rd-packages,packages,albert]
+  set_fact:
+    releases: [tessa, tara, bionic]
+
 - name: Albert | Add Repository Key
-  tags: [extras,packages,albert]
-  when: ansible_distribution_release == 'tara' or ansible_distribution_release == 'bionic'
+  tags: [extras,3rd-packages,packages,albert]
+  when: ansible_distribution_release in releases
   apt_key:
     url: https://download.opensuse.org/repositories/home:manuelschneid3r/xUbuntu_18.04/Release.key
     state: present
 - name: Albert | Add Repository
-  tags: [extras,packages,albert]
-  when: ansible_distribution_release == 'tara' or ansible_distribution_release == 'bionic'
+  tags: [extras,3rd-packages,packages,albert]
+  when: ansible_distribution_release in releases
   apt_repository:
     repo: deb http://download.opensuse.org/repositories/home:/manuelschneid3r/xUbuntu_18.04/ /
     filename: albert
 - name: Albert | Install package
-  tags: [extras,packages,albert]
-  when: ansible_distribution_release == 'tara' or ansible_distribution_release == 'bionic'
+  tags: [extras,3rd-packages,packages,albert]
+  when: ansible_distribution_release in releases
   package:
     name: albert
     state: latest

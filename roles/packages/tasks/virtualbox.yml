@@ -6,7 +6,7 @@
   shell: id -nu 1000
   register: get_user_by_id
 - name: Docker-CE | Store main user
-  tags: [extras,packages,docker]
+  tags: [extras,3rd-packages,packages,docker]
   set_fact:
     user: "{{get_user_by_id.stdout}}"
 
