@@ -1,0 +1,13 @@
+# env ANSIBLE_NOCOWS=1 sudo ansible-playbook --tags keepassxc local.yml
+---
+- name: KeePassXC | Add repo
+  tags: [packages,keepassxc]
+  apt_repository:
+    repo: ppa:phoerious/keepassxc
+    codename: bionic
+- name: KeePassXC | Install keepassxc
+  tags: [packages,keepassxc]
+  package:
+    name: keepassxc
+    state: latest
+    update_cache: yes

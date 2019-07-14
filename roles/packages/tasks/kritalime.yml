@@ -1,0 +1,13 @@
+# sudo env ANSIBLE_NOCOWS=1 ansible-playbook --tags krita local.yml
+---
+- name: Krita | Add repository
+  tags: [krita,3rd-packages,packages]
+  apt_repository:
+    repo: ppa:kritalime/ppa
+    codename: bionic
+- name: Krita | Install package
+  tags: [krita,3rd-packages,packages]
+  package:
+    name: krita
+    state: latest
+    update_cache: yes

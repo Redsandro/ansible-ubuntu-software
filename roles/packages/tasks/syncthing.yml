@@ -1,0 +1,18 @@
+# env ANSIBLE_NOCOWS=1 sudo ansible-playbook --tags syncthing local.yml
+---
+- name: Syncthing | Add repo key
+  tags: [extras,3rd-packages,packages,syncthing]
+  apt_key:
+    url: https://syncthing.net/release-key.txt
+    state: present
+- name: Syncthing | Add repository
+  tags: [extras,3rd-packages,packages,syncthing]
+  apt_repository:
+    repo: deb https://apt.syncthing.net/ syncthing stable
+    filename: syncthing
+- name: Syncthing | Install syncthing
+  tags: [extras,3rd-packages,packages,syncthing]
+  package:
+    name: syncthing
+    state: latest
+    update_cache: yes
